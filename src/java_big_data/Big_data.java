@@ -15,7 +15,11 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
-
+/**
+ * Has useful big data utilities
+ * @author K.Ataman
+ *
+ */
 public class Big_data {
 	/**
 	 * 
@@ -59,9 +63,12 @@ public class Big_data {
 		}
 		return result;
 	}
-	
-	public static String[][] csv_reader(String SAMPLE_CSV_FILE_PATH,
-			int num_columns, int num_rows, String[] column_names) throws IOException{
+	/**
+	 * Contains csv reading and writing utilities
+	 * @author K.Ataman
+	 *
+	 */
+	class csv_utilities{
 		/**
 		 * TODO: CSVs w/o header columns
 		* Reads a csv file
@@ -69,24 +76,25 @@ public class Big_data {
 		* @return {String[num_columns, num_entries]} - the transposed String matrix of csv file
 		* @throws what kind of exception does this method throw
 		*/
-		Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_FILE_PATH));
-	    CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT
-	    		.withFirstRecordAsHeader()
-	            .withIgnoreHeaderCase()
-	            .withTrim());
-	    Iterable<CSVRecord> csvRecords = csvParser.getRecords();
-	    String[][] output = new String [num_columns][num_rows];
-	    int index = 0;
-	    for (CSVRecord csvRecord : csvRecords) {
-	    	for (int i=0; i < column_names.length; i++) {
-	    		output[i][index] = csvRecord.get(column_names[i]);}
-	    	index += 1;
-	    }
-	    csvParser.close();
-		return output;
-	}
-	
-	public static void csv_writer(String location, String name, String[] column_names, String[][] data) throws IOException {
+		public String[][] csv_reader(String SAMPLE_CSV_FILE_PATH,
+				int num_columns, int num_rows, String[] column_names) throws IOException{
+			
+			Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_FILE_PATH));
+		    CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT
+		    		.withFirstRecordAsHeader()
+		            .withIgnoreHeaderCase()
+		            .withTrim());
+		    Iterable<CSVRecord> csvRecords = csvParser.getRecords();
+		    String[][] output = new String [num_columns][num_rows];
+		    int index = 0;
+		    for (CSVRecord csvRecord : csvRecords) {
+		    	for (int i=0; i < column_names.length; i++) {
+		    		output[i][index] = csvRecord.get(column_names[i]);}
+		    	index += 1;
+		    }
+		    csvParser.close();
+			return output;
+		}
 		/**
 		 Writes a csv file
 		 @param {String} location - the folder directory in which the data will be saved
@@ -95,39 +103,39 @@ public class Big_data {
 		 @param {String[][]} data - the data matrix that will be converted to csv
 		 @return {csv} - a csv file at the designated location
 		 */
-		FileWriter fileWriter = null;
-		final String NEW_LINE_SEPARATOR = "\n";
-		 CSVPrinter csvFilePrinter = null;
-		 String fileName = location + name;
-	
-		//Create the CSVFormat object with "\n" as a record delimiter
-		CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator(NEW_LINE_SEPARATOR);
-				
-		//initialize FileWriter object
-		fileWriter = new FileWriter(fileName);
+		public void csv_writer(String location, String name, String[] column_names, String[][] data) throws IOException {
+			
+			FileWriter fileWriter = null;
+			final String NEW_LINE_SEPARATOR = "\n";
+			 CSVPrinter csvFilePrinter = null;
+			 String fileName = location + name;
 		
-		//initialize CSVPrinter object 
-        csvFilePrinter = new CSVPrinter(fileWriter, csvFileFormat);
-        
-        //Create CSV file header
-        List header = new ArrayList();
-        for (int j=0; j < column_names.length; j++) {
-        	header.add(column_names[j]);
-        }
-        csvFilePrinter.printRecord(header);
-		
-		//Write a new student object list to the CSV file
-		for (int i = 0; i < data.length; i++) {
-			List line = new ArrayList();
-			for (int j=0; j < data[1].length; j++) {
-				line.add(data[i][j]);
+			//Create the CSVFormat object with "\n" as a record delimiter
+			CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator(NEW_LINE_SEPARATOR);
+					
+			//initialize FileWriter object
+			fileWriter = new FileWriter(fileName);
+			
+			//initialize CSVPrinter object 
+	        csvFilePrinter = new CSVPrinter(fileWriter, csvFileFormat);
+	        
+	        //Create CSV file header
+	        List header = new ArrayList();
+	        for (int j=0; j < column_names.length; j++) {
+	        	header.add(column_names[j]);
+	        }
+	        csvFilePrinter.printRecord(header);
+			
+			//Write a new student object list to the CSV file
+			for (int i = 0; i < data.length; i++) {
+				List line = new ArrayList();
+				for (int j=0; j < data[1].length; j++) {
+					line.add(data[i][j]);
+				}
+	            csvFilePrinter.printRecord(line);
 			}
-            csvFilePrinter.printRecord(line);
+			csvFilePrinter.close();
 		}
-		csvFilePrinter.close();
-	}
-	
-	public static void csv_writer(String location, String name, String[] column_names, String[] data) throws IOException {
 		/**
 		 Writes a csv file
 		 @param {String} location - the folder directory in which the data will be saved
@@ -136,76 +144,80 @@ public class Big_data {
 		 @param {String[][]} data - the data matrix that will be converted to csv
 		 @return {csv} - a csv file at the designated location
 		 */
-		FileWriter fileWriter = null;
-		final String NEW_LINE_SEPARATOR = "\n";
-		 CSVPrinter csvFilePrinter = null;
-		 String fileName = location + name;
-	
-		//Create the CSVFormat object with "\n" as a record delimiter
-		CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator(NEW_LINE_SEPARATOR);
-				
-		//initialize FileWriter object
-		fileWriter = new FileWriter(fileName);
+		public void csv_writer(String location, String name, String[] column_names, String[] data) throws IOException {
+			
+			FileWriter fileWriter = null;
+			final String NEW_LINE_SEPARATOR = "\n";
+			 CSVPrinter csvFilePrinter = null;
+			 String fileName = location + name;
 		
-		//initialize CSVPrinter object 
-        csvFilePrinter = new CSVPrinter(fileWriter, csvFileFormat);
-        
-        //Create CSV file header
-        List header = new ArrayList();
-        for (int j=0; j < column_names.length; j++) {
-        	header.add(column_names[j]);
-        }
-        csvFilePrinter.printRecord(header);
-		
-		//Write a new student object list to the CSV file
-		for (int i = 0; i < data.length; i++) {
-			List line = new ArrayList();
-				line.add(data[i]);
-            csvFilePrinter.printRecord(line);
-		}
-		csvFilePrinter.close();
-	}
-	
-	public static void csv_writer(String location, String name, String[] column_names, int[][] data) throws IOException {
-		/**
-		 Writes a csv file
-		 @param {String} location - the folder directory in which the data will be saved
-		 @param {String} name - name of the csv file that will be saved
-		 @param {String[]} column_names - Header names
-		 @param {String[][]} data - the data matrix that will be converted to csv
-		 @return {csv} - a csv file at the designated location
-		 */
-		FileWriter fileWriter = null;
-		final String NEW_LINE_SEPARATOR = "\n";
-		 CSVPrinter csvFilePrinter = null;
-		 String fileName = location + name;
-	
-		//Create the CSVFormat object with "\n" as a record delimiter
-		CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator(NEW_LINE_SEPARATOR);
-				
-		//initialize FileWriter object
-		fileWriter = new FileWriter(fileName);
-		
-		//initialize CSVPrinter object 
-        csvFilePrinter = new CSVPrinter(fileWriter, csvFileFormat);
-        
-        //Create CSV file header
-        List header = new ArrayList();
-        for (int j=0; j < column_names.length; j++) {
-        	header.add(column_names[j]);
-        }
-        csvFilePrinter.printRecord(header);
-		
-		//Write a new student object list to the CSV file
-		for (int i = 0; i < data[0].length; i++) {
-			List line = new ArrayList();
-			for (int j=0; j < data[1].length; j++) {
-				line.add(data[i][j]);
+			//Create the CSVFormat object with "\n" as a record delimiter
+			CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator(NEW_LINE_SEPARATOR);
+					
+			//initialize FileWriter object
+			fileWriter = new FileWriter(fileName);
+			
+			//initialize CSVPrinter object 
+	        csvFilePrinter = new CSVPrinter(fileWriter, csvFileFormat);
+	        
+	        //Create CSV file header
+	        List header = new ArrayList();
+	        for (int j=0; j < column_names.length; j++) {
+	        	header.add(column_names[j]);
+	        }
+	        csvFilePrinter.printRecord(header);
+			
+			//Write a new student object list to the CSV file
+			for (int i = 0; i < data.length; i++) {
+				List line = new ArrayList();
+					line.add(data[i]);
+	            csvFilePrinter.printRecord(line);
 			}
-            csvFilePrinter.printRecord(line);
+			csvFilePrinter.close();
 		}
-		csvFilePrinter.close();
+		/**
+		 Writes a csv file
+		 @param {String} location - the folder directory in which the data will be saved
+		 @param {String} name - name of the csv file that will be saved
+		 @param {String[]} column_names - Header names
+		 @param {String[][]} data - the data matrix that will be converted to csv
+		 @return {csv} - a csv file at the designated location
+		 */
+		public void csv_writer(String location, String name, String[] column_names, int[][] data) throws IOException {
+			
+			FileWriter fileWriter = null;
+			final String NEW_LINE_SEPARATOR = "\n";
+			 CSVPrinter csvFilePrinter = null;
+			 String fileName = location + name;
+		
+			//Create the CSVFormat object with "\n" as a record delimiter
+			CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator(NEW_LINE_SEPARATOR);
+					
+			//initialize FileWriter object
+			fileWriter = new FileWriter(fileName);
+			
+			//initialize CSVPrinter object 
+	        csvFilePrinter = new CSVPrinter(fileWriter, csvFileFormat);
+	        
+	        //Create CSV file header
+	        List header = new ArrayList();
+	        for (int j=0; j < column_names.length; j++) {
+	        	header.add(column_names[j]);
+	        }
+	        csvFilePrinter.printRecord(header);
+			
+			//Write a new student object list to the CSV file
+			for (int i = 0; i < data[0].length; i++) {
+				List line = new ArrayList();
+				for (int j=0; j < data[1].length; j++) {
+					line.add(data[i][j]);
+				}
+	            csvFilePrinter.printRecord(line);
+			}
+			csvFilePrinter.close();
+		}
 	}
+	
 	
 	public static String[] find_uniques(String[] data) {
 		return Arrays.stream(data).distinct().toArray(String[]::new);
@@ -214,4 +226,45 @@ public class Big_data {
 	public static int [] find_uniques(int[] data) {
 		return Arrays.stream(data).distinct().toArray();
 	}
+	/**
+	 * Calculates important staitistical variables such as mean and variance
+	 * @author K.Ataman
+	 *
+	 */
+	public static class statistics{
+		/**
+		 * 
+		 * @param {float[]} data
+		 * @return {float} the mean of data
+		 */
+		public static float mean(float[] data) {
+			float mean = 0;
+			for (int i=0; i < data.length; i++) {
+				mean += data[i];
+			}
+			return (float) (mean/data.length);
+		}
+		/**
+		 * calculates variance (aka square of std deviation)
+		 * @param data
+		 * @return {float} 
+		 */
+		public static float variance (float[] data) {
+			float variance = 0;
+			float mean = mean(data);
+			for (int i = 0; i < data.length; i++) {
+				variance += (float)((data[i] - mean) * (data[i] - mean) / (data.length - 1));
+			}
+			return (float) variance;
+		}
+		/**
+		 * calculates standard deviation
+		 * @param data
+		 * @return {float} 
+		 */
+		public static float stdev(float[] data) {
+			return (float) Math.sqrt(variance(data));
+		}
+	}
+	
 }
