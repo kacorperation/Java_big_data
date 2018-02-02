@@ -6,13 +6,14 @@ import org.apache.commons.math3.transform.FastFourierTransformer;
 import org.apache.commons.math3.transform.TransformType;
 
 public class Fourier_analysis {
+	/**
+	 * Finds the fft frequency list
+	 * @param sampling_frequency - {int} how often per time unit is a sample taken
+	 * @param num_entries - {int} number of entries for which fourier analysis is being made
+	 * @return {float[]} The array of fft frequencies
+	 **/
 	public static float[] find_fft_frequencies(int sampling_frequency, int num_entries){
-		/**
-		 * Finds the fft frequency list
-		 * @param {int} sampling_frequency	: how often per time unit is a sample taken
-		 * @param {int} num_entries 		: number of entries for which fourier analysis is being made
-		 * @return {float[]}				: The array of fft frequencies
-		 **/
+		
 		//fft_freq = i*sampling_frequency/num_entries, where i is the ith element
 		float [] fft_freq = new float[num_entries];
 		for (int i=0; i < num_entries ; i++) {
@@ -20,17 +21,17 @@ public class Fourier_analysis {
 		 }
 		return fft_freq;
 	}
-	
+	/**
+	 * Applies fft on given data, then returns the fft mag and freq
+	 * @param sampling_frequency - {int} how often per time unit is a sample taken
+	 * @param data - {double} an array with size [num_entries] whose entries are the 
+	 * 									  number of occurences per sample
+	 * @return {float[num_entries_2][2]}: A matrix of fft_mag and fft_freq, where fft_freq for ith element
+	 * 									  is at return[i][0] and fft_mag for ith element is at 
+	 * 								      return[i][1]
+	 */
 	public static float [][] fft(int sampling_frequency, int[] data) {
-		/**
-		 * Applies fft on given data, then returns the fft mag and freq
-		 * @param {int} sampling_freq		: how often per time unit is a sample taken
-		 * @param {double} data 			: an array with size [num_entries] whose entries are the 
-		 * 									  number of occurences per sample
-		 * @return {float[num_entries_2][2]}: A matrix of fft_mag and fft_freq, where fft_freq for ith element
-		 * 									  is at return[i][0] and fft_mag for ith element is at 
-		 * 								      return[i][1]
-		 */
+		
 		
 		
 		
@@ -59,17 +60,17 @@ public class Fourier_analysis {
 		}
 		return result;
 	}
-	
+	/**
+	 * Finds the local maxima within peak_interval range for the given input elements
+	 * @param peak_interval	- {int} Within how many data points should the maximum element be 
+	 * 								  considered to be a peak. ie setting this to 5 will make sure the 
+	 * 								  peak is the largest element in +-5 points away from it 
+	 * @param data - {float[]} data to find the peak in 
+	 * @return {float[input.length]}: An array of Trues and falses where output[i] = True implies 
+	 * 								  the ith element of the data is a local maxima  
+	 */
 	public static boolean[] peak_finder(int peak_interval, float[] data) {
-		/**
-		 * Finds the local maxima within peak_interval range for the given input elements
-		 * @param {int} peak_interval	: Within how many data points should the maximum element be 
-		 * 								  considered to be a peak. ie setting this to 5 will make sure the 
-		 * 								  peak is the largest element in +-5 points away from it 
-		 * @param {float[]} input 		: data to find the peak in 
-		 * @return {float[input.length]}: An array of Trues and falses where output[i] = True implies 
-		 * 								  the ith element of the data is a local maxima  
-		 */
+		
 		double mean = 0.0;
 		for (int i=0; i < data.length; i++) {
 			mean += data[i];
@@ -124,7 +125,11 @@ public class Fourier_analysis {
 		}
 		return result;
 	}
-			
+	/**
+	 * 		
+	 * @param num {int} the number in question
+	 * @return the closest greater or equal power of two
+	 */
 	static int nextPowerOf2(int num)
 	{
 	    return num == 1 ? 1 : Integer.highestOneBit(num - 1) * 2;
