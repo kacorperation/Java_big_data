@@ -76,7 +76,7 @@ public class Big_data {
 		* @return {String[num_columns, num_entries]} - the transposed String matrix of csv file
 		* @throws what kind of exception does this method throw
 		*/
-		public String[][] csv_reader(String SAMPLE_CSV_FILE_PATH,
+		public String[][] csv_reader_with_header(String SAMPLE_CSV_FILE_PATH,
 				int num_columns, int num_rows, String[] column_names) throws IOException{
 			
 			Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_FILE_PATH));
@@ -103,7 +103,7 @@ public class Big_data {
 		 @param {String[][]} data - the data matrix that will be converted to csv
 		 @return {csv} - a csv file at the designated location
 		 */
-		public void csv_writer(String location, String name, String[] column_names, String[][] data) throws IOException {
+		public void csv_writer_with_header(String location, String name, String[] column_names, String[][] data) throws IOException {
 			
 			FileWriter fileWriter = null;
 			final String NEW_LINE_SEPARATOR = "\n";
@@ -144,7 +144,7 @@ public class Big_data {
 		 @param {String[][]} data - the data matrix that will be converted to csv
 		 @return {csv} - a csv file at the designated location
 		 */
-		public void csv_writer(String location, String name, String[] column_names, String[] data) throws IOException {
+		public void csv_writer_with_header(String location, String name, String[] column_names, String[] data) throws IOException {
 			
 			FileWriter fileWriter = null;
 			final String NEW_LINE_SEPARATOR = "\n";
@@ -183,7 +183,7 @@ public class Big_data {
 		 @param {String[][]} data - the data matrix that will be converted to csv
 		 @return {csv} - a csv file at the designated location
 		 */
-		public void csv_writer(String location, String name, String[] column_names, int[][] data) throws IOException {
+		public void csv_writer_with_header(String location, String name, String[] column_names, int[][] data) throws IOException {
 			
 			FileWriter fileWriter = null;
 			final String NEW_LINE_SEPARATOR = "\n";
