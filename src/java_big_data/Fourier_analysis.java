@@ -8,7 +8,7 @@ import org.apache.commons.math3.transform.TransformType;
 public class Fourier_analysis {
 	/**
 	 * Finds the fft frequency list
-	 * @param sampling_frequency - {int} how often per time unit is a sample taken
+	 * @param sampling_frequency {int} how often per time unit is a sample taken
 	 * @param num_entries - {int} number of entries for which fourier analysis is being made
 	 * @return {float[]} The array of fft frequencies
 	 **/
@@ -30,11 +30,7 @@ public class Fourier_analysis {
 	 * 									  is at return[i][0] and fft_mag for ith element is at 
 	 * 								      return[i][1]
 	 */
-	public static float [][] fft(int sampling_frequency, int[] data) {
-		
-		
-		
-		
+	public static float [][] fft(int sampling_frequency, int[] data) {		
 		//stretch num_entries to the least greater power of two, as fft only works on sets whose 
 		//number of entries is a power of 2
 		int num_entries_2 = nextPowerOf2(data.length);
