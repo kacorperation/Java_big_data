@@ -1,11 +1,11 @@
 package java_big_data;
 
-import src.big_data_utilities.HashMap;
-import src.big_data_utilities.Integer;
-import src.big_data_utilities.Map;
-import src.big_data_utilities.String;
-
 public class Big_data {
+	/**
+	 * 
+	 * @param data
+	 * @return the enumerated list of data
+	 */
 	public int[] enumerate(String[] data) {
 		Map<String, Integer> dictionary = new HashMap<String, Integer>();
 		//get unique elements of data
@@ -22,7 +22,12 @@ public class Big_data {
 		}
 		return result;
 	}
-	public int[] enumerate(Int[] data) {
+	/**
+	 * 
+	 * @param data
+	 * @return the enumerated list of data
+	 */
+	public int[] enumerate(int[] data) {
 		Map<String, Integer> dictionary = new HashMap<String, Integer>();
 		//get unique elements of data
 		String[] temp_list = Arrays.stream(data).distinct().toArray(String[]::new);
@@ -38,5 +43,6 @@ public class Big_data {
 		}
 		return result;
 	}
+	
 	
 }
