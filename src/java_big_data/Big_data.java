@@ -22,9 +22,9 @@ import org.apache.commons.csv.CSVRecord;
  */
 public class Big_data {
 	/**
-	 * 
+	 * Creates the enumerated list of {String[]} data
 	 * @param data
-	 * @return the enumerated list of data
+	 * @return {int[]}
 	 */
 	public int[] enumerate(String[] data) {
 		Map<String, Integer> dictionary = new HashMap<String, Integer>();
@@ -43,9 +43,9 @@ public class Big_data {
 		return result;
 	}
 	/**
-	 * 
+	 * Creates the enumerated list of {int[]} data
 	 * @param data
-	 * @return the enumerated list of data
+	 * @return {int[]}
 	 */
 	public int[] enumerate(int[] data) {
 		Map<Integer, Integer> dictionary = new HashMap<Integer, Integer>();
