@@ -44,7 +44,7 @@ public class Big_data {
 	}
 	/**
 	 * Creates the enumerated list of {int[]} data
-	 * @param data
+	 * @param data {int[]}
 	 * @return {int[]}
 	 */
 	public int[] enumerate(int[] data) {
@@ -64,18 +64,35 @@ public class Big_data {
 		return result;
 	}
 	/**
+	 * 
+	 * @param data - {String[]}
+	 * @return A string array consisting one of each element
+	 */
+	public static String[] find_uniques(String[] data) {
+		return Arrays.stream(data).distinct().toArray(String[]::new);
+	}
+	/**
+	 * 
+	 * @param data - {int[]}
+	 * @return An int array consisting one of each element
+	 */
+	public static int [] find_uniques(int[] data) {
+		return Arrays.stream(data).distinct().toArray();
+	}
+	/**
 	 * Contains csv reading and writing utilities
 	 * @author K.Ataman
 	 *
 	 */
 	class csv_utilities{
 		/**
-		 * TODO: CSVs w/o header columns
-		* Reads a csv file
-		* @param the parameters used by the method
-		* @return {String[num_columns, num_entries]} - the transposed String matrix of csv file
-		* @throws what kind of exception does this method throw
-		*/
+		 * Converts csv with headers to a string matrix without the headers
+		 * @param SAMPLE_CSV_FILE_PATH - {String} the folder location of csv
+		 * @param num_columns -  {int} number of columns of the file
+		 * @param num_rows -  {int} number of rows of the file
+		 * @return {String[][]}
+		 * @throws IOException
+		 */
 		public String[][] csv_reader_with_header(String SAMPLE_CSV_FILE_PATH,
 				int num_columns, int num_rows, String[] column_names) throws IOException{
 			
@@ -90,6 +107,34 @@ public class Big_data {
 		    for (CSVRecord csvRecord : csvRecords) {
 		    	for (int i=0; i < column_names.length; i++) {
 		    		output[i][index] = csvRecord.get(column_names[i]);}
+		    	index += 1;
+		    }
+		    csvParser.close();
+			return output;
+		}
+		/**
+		 * Converts csv without headers to a string matrix 
+		 * @param SAMPLE_CSV_FILE_PATH - {String} the folder location of csv
+		 * @param num_columns -  {int} number of columns of the file
+		 * @param num_rows -  {int} number of rows of the file
+		 * @return {String[][]}
+		 * @throws IOException
+		 */
+		public String[][] csv_reader_without_header(String SAMPLE_CSV_FILE_PATH,
+				int num_columns, int num_rows) throws IOException{
+			
+			Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_FILE_PATH));
+		    CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT
+		    		.withFirstRecordAsHeader()
+		            .withIgnoreHeaderCase()
+		            .withTrim());
+		    Iterable<CSVRecord> csvRecords = csvParser.getRecords();
+		    String[][] output = new String [num_columns][num_rows];
+		    int index = 0;
+		    for (CSVRecord csvRecord : csvRecords) {
+		    	for (int i=0; i < num_columns; i++) {
+		    		output[i][index] = csvRecord.get(i);
+		    	}
 		    	index += 1;
 		    }
 		    csvParser.close();
@@ -219,13 +264,6 @@ public class Big_data {
 	}
 	
 	
-	public static String[] find_uniques(String[] data) {
-		return Arrays.stream(data).distinct().toArray(String[]::new);
-	}
-	
-	public static int [] find_uniques(int[] data) {
-		return Arrays.stream(data).distinct().toArray();
-	}
 	/**
 	 * Calculates important staitistical variables such as mean and variance
 	 * @author K.Ataman
